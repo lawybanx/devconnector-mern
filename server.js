@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/~/~', require('./routes/~/~'));
+app.use('/users', require('./routes/users'));
 
 // Static Build Folder
 if (process.env.NODE_ENV === 'production') {
