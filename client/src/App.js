@@ -1,9 +1,9 @@
+import Header from './components/Header';
+
 function App() {
   return (
     <div>
-      <header>
-        <h1>Mern Skeleton</h1>
-      </header>
+      <Header />
     </div>
   );
 }
