@@ -10,7 +10,7 @@ node_modules/
 
 # production
 /build
-# /config/config.env
+config.env
 
 # misc
 .DS_Store
