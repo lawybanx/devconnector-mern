@@ -1,9 +1,11 @@
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
+const colors = require('colors');
+const morgan = require('morgan');
 const connectDB = require('./config/db');
 
-dotenv.config({ path: './config/config.env' });
+dotenv.config();
 
 // Connect MongoDB at default port 27017.
 connectDB();
@@ -15,8 +17,15 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 // Routes
-app.use('/users', require('./routes/users'));
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/profile', require('./routes/api/profile'));
+// app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 // Static Build Folder
 if (process.env.NODE_ENV === 'production') {
@@ -33,6 +42,7 @@ const PORT = process.env.PORT || 5000;
 // Start Server
 app.listen(PORT, () => {
   console.log(
-    `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`.blue
+      .bold
   );
 });
