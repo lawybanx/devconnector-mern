@@ -154,3 +154,37 @@ exports.deleteProfile = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+//  @route  PUT api/profile/experience
+//  @desc   Add profile experience
+//  @access Private
+exports.addExperience = async (req, res, next) => {
+  // Get Errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { title, company, location, from, to, current, description } = req.body;
+
+  const newExp = {
+    title,
+    company,
+    location,
+    from,
+    to,
+    current,
+    description,
+  };
+
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    profile.experience.unshift(newExp);
+
+    await profile.save();
+    return res.status(202).json(profile);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
