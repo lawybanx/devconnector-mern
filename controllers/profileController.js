@@ -1,3 +1,4 @@
+const axios = require('axios');
 const { validationResult } = require('express-validator');
 
 // Bring in Models
@@ -158,6 +159,7 @@ exports.deleteProfile = async (req, res) => {
 //  @route  PUT api/profile/experience
 //  @desc   Add profile experience
 //  @access Private
+
 exports.addExperience = async (req, res, next) => {
   // Get Errors
   const errors = validationResult(req);
@@ -184,6 +186,116 @@ exports.addExperience = async (req, res, next) => {
 
     await profile.save();
     return res.status(202).json(profile);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+//  @route  DELETE api/profile/experience/:exp_id
+//  @desc   Delete an experience from profile
+//  @access Private
+
+exports.deleteExperience = async (req, res, next) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // Get index
+    const removeIndex = profile.experience
+      .map(item => item.id)
+      .indexOf(req.params.exp_id);
+
+    profile.experience.splice(removeIndex, 1);
+    await profile.save();
+
+    res.status(200).json(profile);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+//  @route  PUT api/profile/education
+//  @desc   Add profile education
+//  @access Private
+
+exports.addEducation = async (req, res, next) => {
+  // Get Errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const {
+    school,
+    degree,
+    fieldofstudy,
+    from,
+    to,
+    current,
+    description,
+  } = req.body;
+
+  const newEdu = {
+    school,
+    degree,
+    fieldofstudy,
+    from,
+    to,
+    current,
+    description,
+  };
+
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    profile.education.unshift(newEdu);
+
+    await profile.save();
+    return res.status(202).json(profile);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+//  @route  DELETE api/profile/education/:edu_id
+//  @desc   Delete an education from profile
+//  @access Private
+
+exports.deleteEducation = async (req, res, next) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // Get index
+    const removeIndex = profile.education
+      .map(item => item.id)
+      .indexOf(req.params.exp_id);
+
+    profile.education.splice(removeIndex, 1);
+    await profile.save();
+
+    res.status(200).json(profile);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+//  @route  GET api/profile/github/:username
+//  @desc   Get user repos from Github
+//  @access Public
+
+exports.getRepos = async (req, res, next) => {
+  try {
+    const uri = encodeURI(
+      `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+    );
+
+    const headers = {
+      'user-agent': 'node.js',
+      // Authorization: `token ${process.env.GITHUB_CLIENT_SECRET}`,
+    };
+    const gitHubResponse = await axios.get(uri, { headers });
+    console.log(gitHubResponse);
+
+    return res.json(gitHubResponse.data);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

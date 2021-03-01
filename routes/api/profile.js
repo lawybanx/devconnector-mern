@@ -7,6 +7,10 @@ const {
   getProfileById,
   deleteProfile,
   addExperience,
+  addEducation,
+  deleteExperience,
+  deleteEducation,
+  getRepos,
 } = require('../../controllers/profileController');
 const auth = require('../../middleware/auth');
 const { check } = require('express-validator');
@@ -35,5 +39,22 @@ router.put(
   auth,
   addExperience
 );
+
+router.delete('/experience/:exp_id', auth, deleteExperience);
+
+router.put(
+  '/education',
+
+  check('school', 'Title is required').notEmpty(),
+  check('degree', 'Company is required').notEmpty(),
+  check('fieldofstudy', 'Field of Study is required').notEmpty(),
+  check('from', 'From date is required').notEmpty(),
+  auth,
+  addEducation
+);
+
+router.delete('/education/:edu_id', auth, deleteEducation);
+
+router.get('/github/:username', getRepos);
 
 module.exports = router;

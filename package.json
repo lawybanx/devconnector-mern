@@ -1,10 +1,9 @@
 {
   "name": "devconnector-mern",
   "version": "1.0.0",
-  "description": "a boilerplate for Mern apps",
+  "description": "",
   "main": "server.js",
   "scripts": {
-    "client-install": "npm install --prefix client",
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
@@ -13,6 +12,7 @@
   "author": "Muhammad-awwal Bankole",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
@@ -21,8 +21,7 @@
     "gravatar": "^1.8.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.15",
-    "morgan": "^1.10.0",
-    "request": "^2.88.2"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
