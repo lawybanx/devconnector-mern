@@ -15,8 +15,10 @@ const {
 const auth = require('../../middleware/auth');
 const { check } = require('express-validator');
 
+// Get Logged in User Profile
 router.route('/me').get(auth, getProfile);
 
+// Get All profiles, Create new Profile, Delete Profile
 router
   .route('/')
   .get(getAllProfiles)
@@ -28,8 +30,10 @@ router
   )
   .delete(auth, deleteProfile);
 
+// Get User Profile by Id
 router.get('/user/:user_id', getProfileById);
 
+// Create new Experience
 router.put(
   '/experience',
 
@@ -40,8 +44,10 @@ router.put(
   addExperience
 );
 
+// Delete Experience
 router.delete('/experience/:exp_id', auth, deleteExperience);
 
+// Create new Education
 router.put(
   '/education',
 
@@ -53,8 +59,10 @@ router.put(
   addEducation
 );
 
+// Delete Education
 router.delete('/education/:edu_id', auth, deleteEducation);
 
+// Get User github repos
 router.get('/github/:username', getRepos);
 
 module.exports = router;

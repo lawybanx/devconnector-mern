@@ -73,7 +73,6 @@ exports.createProfile = async (req, res) => {
   } = req.body;
 
   // Build profile object
-  const profileFields = {};
   profileFields.user = req.user.id;
   if (status) profileFields.status = status;
   if (company) profileFields.company = company;
@@ -130,11 +129,11 @@ exports.getProfileById = async (req, res) => {
 
     res.status(200).json(profile);
   } catch (err) {
-    if (err.kind == 'ObjectId') {
-      return res.status(400).json({ msg: 'Profile not found' });
-    }
+      if (err.kind == 'ObjectId') {
+        return res.status(400).json({ msg: 'Profile not found' });
+      }
 
-    res.status(400).json({ error: err.message });
+      res.status(400).json({ error: err.message });
   }
 };
 
@@ -290,10 +289,9 @@ exports.getRepos = async (req, res, next) => {
 
     const headers = {
       'user-agent': 'node.js',
-      // Authorization: `token ${process.env.GITHUB_CLIENT_SECRET}`,
+      Authorization: `token${process.env.GITHUB_CLIENT_SECRET}`,
     };
     const gitHubResponse = await axios.get(uri, { headers });
-    console.log(gitHubResponse);
 
     return res.json(gitHubResponse.data);
   } catch (err) {
