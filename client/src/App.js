@@ -1,10 +1,13 @@
-import Header from './components/Header';
+import Landing from './components/layouts/Landing';
+import Navbar from './components/layouts/Navbar';
+import './App.css';
 
 function App() {
   return (
-    <div>
-      <Header />
-    </div>
+    <>
+      <Navbar />
+      <Landing />
+    </>
   );
 }
 
