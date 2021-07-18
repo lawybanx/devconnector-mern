@@ -16,7 +16,7 @@ router.post(
   check('email', 'Email is not valid').isEmail(),
   check(
     'password',
-    'Please enter a password with 6 or more charecters'
+    'Please enter a password with 6 or more characters'
   ).isLength({ min: 6 }),
   registerUser
 );

@@ -78,7 +78,7 @@ exports.registerUser = async (req, res) => {
 };
 
 //  @route  POST api/auth/login
-//  @desc   Register new user
+//  @desc   Login user
 //  @access Public
 
 exports.loginUser = async (req, res) => {
