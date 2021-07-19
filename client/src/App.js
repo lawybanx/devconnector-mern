@@ -1,15 +1,25 @@
+import { useEffect } from 'react';
 import Landing from './components/layouts/Landing';
 import Navbar from './components/layouts/Navbar';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import { loadUser } from './actions/authActions';
+
 import './App.css';
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <Router>
-      <>
+    <Provider store={store}>
+      <Router>
         <Navbar />
         <Route exact path="/" component={Landing} />
         <section className="container">
@@ -18,9 +28,9 @@ function App() {
             <Route exact path="/login" component={Login} />
           </Switch>
         </section>
-      </>
-    </Router>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;
