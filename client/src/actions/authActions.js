@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import {
-  USER_LOADING,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -15,9 +14,6 @@ import { setAlert } from './alertActions';
 // Check token and load User
 export const loadUser = () => async (dispatch, getState) => {
   try {
-    // User Loading
-    dispatch({ type: USER_LOADING });
-
     const res = await axios.get('/api/auth/user', tokenConfig(getState));
 
     dispatch({

@@ -1,5 +1,4 @@
 import {
-  USER_LOADING,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -12,18 +11,12 @@ import {
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
-  isLoading: false,
+  isLoading: true,
   user: null,
 };
 
 const authReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case USER_LOADING:
-      return {
-        ...state,
-        isLoading: true,
-      };
-
     case USER_LOADED:
       return {
         ...state,

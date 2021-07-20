@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Landing from './components/layouts/Landing';
 import Navbar from './components/layouts/Navbar';
-import Dashboard from './components/layouts/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import Alert from './components/layouts/Alert';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
