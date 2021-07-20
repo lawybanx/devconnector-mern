@@ -1,11 +1,11 @@
 import { SET_ALERT, REMOVE_ALERT } from '../actions/actionTypes';
 
-const initialState = {};
+const initialState = [];
 
 const alertReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_ALERT:
-      return { ...state, ...payload };
+      return [...state, payload];
 
     case REMOVE_ALERT:
       return state.filter(alert => alert.id !== payload);
