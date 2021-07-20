@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 
 import { setAlert } from '../../actions/alertActions';
+import { registerUser } from '../../actions/authActions';
 
 const Register = () => {
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -25,9 +27,14 @@ const Register = () => {
     if (password !== password2) {
       dispatch(setAlert('Passwords do not match', 'danger', 3000));
     } else {
-      console.log('Success');
+      const newUser = { name, email, password };
+      dispatch(registerUser(newUser));
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <>

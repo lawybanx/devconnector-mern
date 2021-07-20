@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Landing from './components/layouts/Landing';
 import Navbar from './components/layouts/Navbar';
+import Dashboard from './components/layouts/Dashboard';
 import Alert from './components/layouts/Alert';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -28,6 +29,7 @@ const App = () => {
           <Switch>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/dashboard" component={Dashboard} />
           </Switch>
         </section>
       </Router>

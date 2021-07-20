@@ -10,6 +10,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
 } from './actionTypes';
+import { setAlert } from './alertActions';
 
 // Check token and load User
 export const loadUser = () => async (dispatch, getState) => {
@@ -23,7 +24,9 @@ export const loadUser = () => async (dispatch, getState) => {
       type: USER_LOADED,
       payload: res.data,
     });
-  } catch (err) {}
+  } catch (err) {
+    dispatch({ type: AUTH_ERROR });
+  }
 };
 
 // Register User
@@ -47,7 +50,16 @@ export const registerUser =
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
-    } catch (err) {}
+      dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({ type: REGISTER_FAIL });
+    }
   };
 
 // Login User
@@ -71,7 +83,16 @@ export const loginUser =
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
-    } catch (err) {}
+      dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({ type: LOGIN_FAIL });
+    }
   };
 
 // Logout User

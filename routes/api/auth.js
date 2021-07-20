@@ -26,7 +26,7 @@ router.post(
 
   check('email', 'Email is required').notEmpty(),
   check('email', 'Email is not valid').isEmail(),
-  check('password', 'Password is required').exists(),
+  check('password', 'Password is required').notEmpty(),
   loginUser
 );
 
