@@ -17,14 +17,14 @@ const Navbar = () => {
       <li>
         |
         <Link to="/dashboard" title="Dashboard">
-          <i class="fas fa-user"></i>
-          <span class="hide-sm"> Dashboard</span>
+          <i className="fas fa-user"></i>
+          <span className="hide-sm"> Dashboard</span>
         </Link>
       </li>
       <li>
         <Link to="#!" title="Logout" onClick={() => dispatch(logout())}>
-          <i class="fas fa-sign-out-alt"></i>
-          <span class="hide-sm">Logout</span>
+          <i className="fas fa-sign-out-alt"></i>
+          <span className="hide-sm">Logout</span>
         </Link>
       </li>
     </ul>

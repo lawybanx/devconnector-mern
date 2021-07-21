@@ -52,6 +52,8 @@ export const registerUser =
 
       if (errors) {
         errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      } else {
+        dispatch(setAlert(err.response.data.msg, 'danger'));
       }
 
       dispatch({ type: REGISTER_FAIL });
@@ -85,6 +87,8 @@ export const loginUser =
 
       if (errors) {
         errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      } else {
+        dispatch(setAlert(err.response.data.msg, 'danger'));
       }
 
       dispatch({ type: LOGIN_FAIL });

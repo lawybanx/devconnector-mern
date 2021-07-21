@@ -43,7 +43,7 @@ exports.registerUser = async (req, res) => {
     // Check for existing user
     const userExists = await User.findOne({ email });
     if (userExists)
-      return res.status(400).json([{ msg: 'User already exists' }]);
+      return res.status(400).json({ msg: 'User already exists' });
 
     const avatar = gravatar.url(email, {
       s: '200',
@@ -93,7 +93,7 @@ exports.loginUser = async (req, res) => {
   try {
     // Check for existing user
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json([{ msg: 'Invalid credentials' }]);
+    if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
 
     // Validating password
     const isMatch = await bcrypt.compare(password, user.password);
