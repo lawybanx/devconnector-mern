@@ -17,8 +17,8 @@ const Navbar = () => {
       <li>
         |
         <Link to="/dashboard" title="Dashboard">
-          <i className="fas fa-user"></i>
-          <span className="hide-sm"> Dashboard</span>
+          <i className="fas fa-user"></i>{' '}
+          <span className="hide-sm">Dashboard</span>
         </Link>
       </li>
       <li>

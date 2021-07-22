@@ -8,6 +8,7 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  CLEAR_PROFILE,
 } from './actionTypes';
 import { setAlert } from './alertActions';
 
@@ -96,10 +97,9 @@ export const loginUser =
   };
 
 // Logout User
-export const logout = () => {
-  return {
-    type: LOGOUT_SUCCESS,
-  };
+export const logout = () => dispatch => {
+  dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: LOGOUT_SUCCESS });
 };
 
 // Setup config/headers and token
