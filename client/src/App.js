@@ -17,7 +17,7 @@ import './App.css';
 
 const App = () => {
   useEffect(() => {
-    store.dispatch(loadUser());
+    store.dispatch(loadUser());//Why is this here?
   }, []);
 
   return (

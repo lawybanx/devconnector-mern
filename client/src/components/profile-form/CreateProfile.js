@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProfile } from '../../actions/profileActions';
 
-const CreateProfile = () => {
+const CreateProfile = ({ history }) => {
   const dispatch = useDispatch();
-  const { profile } = useSelector(state => state.profile);
+  // const { profile } = useSelector(state => state.profile);
 
   const [formData, setFormData] = useState({
     company: '',
@@ -45,12 +45,10 @@ const CreateProfile = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(createProfile(formData));
+    dispatch(createProfile(formData, history));
   };
 
-  return profile !== null ? (
-    <Redirect to="/dashboard" />
-  ) : (
+  return (
     <>
       <h1 className="large text-primary">Create Your Profile</h1>
       <p className="lead">
