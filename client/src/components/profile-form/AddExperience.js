@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { addExperience } from '../../actions/profileActions';
 
 const AddExperience = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const [check, toggleCheck] = useState(false);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -24,8 +27,7 @@ const AddExperience = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(formData);
-    // dispatch(addExperience(formData));
+    dispatch(addExperience(formData, navigate));
   };
 
   return (

@@ -23,7 +23,7 @@ export const getCurrentProfile = () => async (dispatch, getState) => {
 
 // Create or Update profile
 export const createProfile =
-  (formData, history, edit = false) =>
+  (formData, navigate, edit = false) =>
   async (dispatch, getState) => {
     try {
       const res = await axios.post(
@@ -42,7 +42,7 @@ export const createProfile =
       );
 
       if (!edit) {
-        history.push('/dashboard');
+        navigate('/dashboard');
       }
     } catch (err) {
       const errors = err.response.data.errors;
@@ -62,6 +62,41 @@ export const createProfile =
     }
   };
 
-export const deleteProfile = () => dispatch => {
-  
-};
+// Add an Experience
+export const addExperience =
+  (formData, navigate
+    ) => async (dispatch, getState) => {
+    try {
+      const res = await axios.put(
+        '/api/profile/experience',
+        formData,
+        tokenConfig(getState)
+      );
+
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
+
+      dispatch(setAlert('Experience Updated', 'success'));
+
+      navigate('/dashboard');
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      } else {
+        dispatch(setAlert(err.response.data.msg, 'danger'));
+      }
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status,
+        },
+      });
+    }
+  };
+
+export const deleteProfile = () => dispatch => {};

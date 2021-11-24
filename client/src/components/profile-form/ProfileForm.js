@@ -3,11 +3,6 @@ import { Link, useMatch, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 
-/*
-  NOTE: declare initialState outside of component
-  so that it doesn't trigger a useEffect
-  we can then safely use this to construct our profileData
- */
 const initialState = {
   company: '',
   website: '',
@@ -25,13 +20,9 @@ const initialState = {
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
-  const {
-    profile: { profile, loading },
-  } = useSelector(state => ({
-    profile: state.profile,
-  }));
+  const { profile, loading } = useSelector(state => state.profile);
 
-  const [formData, setFormData] = useState({ initialState });
+  const [formData, setFormData] = useState(initialState);
 
   const creatingProfile = useMatch('/create-profile');
 
@@ -93,7 +84,7 @@ const ProfileForm = () => {
       <p className="lead">
         <i className="fas fa-user"></i>{' '}
         {creatingProfile
-          ? ` Let's get some information to make your`
+          ? ` Let's get some information to make your profile stand out`
           : ' Add some changes to your profile'}
       </p>
       <small>* = required field</small>

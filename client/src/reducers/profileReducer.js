@@ -16,7 +16,6 @@ const initialState = {
 const profileReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_PROFILE:
-    // case CREATE_PROFILE:
       return { ...state, profile: payload, loading: false };
 
     case CLEAR_PROFILE:
