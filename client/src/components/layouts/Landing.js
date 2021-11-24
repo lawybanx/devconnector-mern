@@ -1,4 +1,4 @@
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Landing = () => {
@@ -27,7 +27,7 @@ const Landing = () => {
           </div>
         </section>
       ) : (
-        <Redirect to="/dashboard" />
+        <Navigate to="/dashboard" />
       )}
     </>
   );
