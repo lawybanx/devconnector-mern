@@ -19,14 +19,16 @@ const Education = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Northern Essex</td>
-            <td className="hide-sm">Associates</td>
-            <td className="hide-sm">02-03-2007 - 01-02-2009</td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
+          {education.map(edu => (
+            <tr>
+              <td>{edu.school}</td>
+              <td className="hide-sm">{edu.degree}</td>
+              <td className="hide-sm">02-03-2007 - 01-02-2009</td>
+              <td>
+                <button className="btn btn-danger">Delete</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>

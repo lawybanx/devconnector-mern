@@ -2,7 +2,7 @@ import axios from 'axios';
 import { tokenConfig } from './authActions';
 import { setAlert } from './alertActions';
 
-import { GET_PROFILE, PROFILE_ERROR } from './actionTypes';
+import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from './actionTypes';
 
 // Get current user profile
 export const getCurrentProfile = () => async (dispatch, getState) => {
@@ -62,10 +62,9 @@ export const createProfile =
     }
   };
 
-// Add an Experience
+// Add Experience
 export const addExperience =
-  (formData, navigate
-    ) => async (dispatch, getState) => {
+  (formData, navigate) => async (dispatch, getState) => {
     try {
       const res = await axios.put(
         '/api/profile/experience',
@@ -74,11 +73,11 @@ export const addExperience =
       );
 
       dispatch({
-        type: GET_PROFILE,
+        type: UPDATE_PROFILE,
         payload: res.data,
       });
 
-      dispatch(setAlert('Experience Updated', 'success'));
+      dispatch(setAlert('Experience Added', 'success'));
 
       navigate('/dashboard');
     } catch (err) {
@@ -99,4 +98,41 @@ export const addExperience =
     }
   };
 
+// Add Education
+export const addEducation =
+  (formData, navigate) => async (dispatch, getState) => {
+    try {
+      const res = await axios.put(
+        '/api/profile/education',
+        formData,
+        tokenConfig(getState)
+      );
+
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: res.data,
+      });
+
+      dispatch(setAlert('Education Added', 'success'));
+
+      navigate('/dashboard');
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      } else {
+        dispatch(setAlert(err.response.data.msg, 'danger'));
+      }
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status,
+        },
+      });
+    }
+  };
+
+// Delete Profile & User
 export const deleteProfile = () => dispatch => {};

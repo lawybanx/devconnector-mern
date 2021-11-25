@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { addEducation } from '../../actions/profileActions';
 
 const AddEducation = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     school: '',
     degree: '',
@@ -20,10 +22,11 @@ const AddEducation = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const navigate = useNavigate();
+
   const onSubmit = e => {
     e.preventDefault();
-    console.log(formData);
-    // dispatch(addEducation(formData));
+    dispatch(addEducation(formData, navigate));
   };
 
   return (
