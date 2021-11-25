@@ -1,10 +1,36 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import formatDate from '../../utils/formatDate';
+import { deleteEducation } from '../../actions/profileActions';
 
 const Education = () => {
+  const dispatch = useDispatch();
+
   const {
     profile: { education },
   } = useSelector(state => state.profile);
+
+  const handleDelete = id => {
+    dispatch(deleteEducation(id));
+  };
+
+  const educations = education.map(edu => (
+    <tr key={edu._id}>
+      <td>{edu.school}</td>
+      <td className="hide-sm">{edu.degree}</td>
+      <td className="hide-sm">
+        {formatDate(edu.from)} - {edu.to ? formatDate(edu.to) : 'Now'}
+      </td>
+      <td>
+        <button
+          className="btn btn-danger"
+          onClick={() => handleDelete(edu._id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  ));
 
   return (
     <>
@@ -18,18 +44,7 @@ const Education = () => {
             <th />
           </tr>
         </thead>
-        <tbody>
-          {education.map(edu => (
-            <tr>
-              <td>{edu.school}</td>
-              <td className="hide-sm">{edu.degree}</td>
-              <td className="hide-sm">02-03-2007 - 01-02-2009</td>
-              <td>
-                <button className="btn btn-danger">Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{educations}</tbody>
       </table>
     </>
   );

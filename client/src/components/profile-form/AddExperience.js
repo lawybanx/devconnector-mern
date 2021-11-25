@@ -15,7 +15,7 @@ const AddExperience = () => {
     location: '',
     from: '',
     to: '',
-    current: null,
+    current: false,
     description: '',
   });
 
@@ -45,7 +45,7 @@ const AddExperience = () => {
             placeholder="* Job Title"
             name="title"
             value={title}
-            onChange={e => onChange(e)}
+            onChange={onChange}
             required
           />
         </div>
@@ -55,7 +55,7 @@ const AddExperience = () => {
             placeholder="* Company"
             name="company"
             value={company}
-            onChange={e => onChange(e)}
+            onChange={onChange}
             required
           />
         </div>
@@ -65,17 +65,12 @@ const AddExperience = () => {
             placeholder="Location"
             name="location"
             value={location}
-            onChange={e => onChange(e)}
+            onChange={onChange}
           />
         </div>
         <div className="form-group">
           <h4>From Date</h4>
-          <input
-            type="date"
-            name="from"
-            value={from}
-            onChange={e => onChange(e)}
-          />
+          <input type="date" name="from" value={from} onChange={onChange} />
         </div>
         <div className="form-group">
           <p>
@@ -83,15 +78,23 @@ const AddExperience = () => {
               type="checkbox"
               name="current"
               checked={current}
-              // onChange={() => on(!current)}
-              onChange={e => onChange(e)}
+              value={current}
+              onChange={() => {
+                setFormData({ ...formData, current: !current });
+              }}
             />{' '}
             Current Job
           </p>
         </div>
         <div className="form-group">
           <h4>To Date</h4>
-          <input type="date" name="to" value={to} onChange={e => onChange(e)} />
+          <input
+            type="date"
+            name="to"
+            value={to}
+            onChange={onChange}
+            disabled={current}
+          />
         </div>
         <div className="form-group">
           <textarea
@@ -100,7 +103,7 @@ const AddExperience = () => {
             rows="5"
             placeholder="Job Description"
             value={description}
-            onChange={e => onChange(e)}
+            onChange={onChange}
           ></textarea>
         </div>
         <input type="submit" className="btn btn-primary my-1" />

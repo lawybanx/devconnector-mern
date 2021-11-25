@@ -5,13 +5,16 @@ import { addEducation } from '../../actions/profileActions';
 
 const AddEducation = () => {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     school: '',
     degree: '',
     fieldofstudy: '',
     from: '',
     to: '',
-    current: '',
+    current: false,
     description: '',
   });
 
@@ -21,8 +24,6 @@ const AddEducation = () => {
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const navigate = useNavigate();
 
   const onSubmit = e => {
     e.preventDefault();
@@ -44,7 +45,7 @@ const AddEducation = () => {
             placeholder="* School or Bootcamp"
             name="school"
             value={school}
-            onChange={e => onChange(e)}
+            onChange={onChange}
             required
           />
         </div>
@@ -54,7 +55,7 @@ const AddEducation = () => {
             placeholder="* Degree or Certificate"
             name="degree"
             value={degree}
-            onChange={e => onChange(e)}
+            onChange={onChange}
             required
           />
         </div>
@@ -64,32 +65,36 @@ const AddEducation = () => {
             placeholder="Field Of Study"
             name="fieldofstudy"
             value={fieldofstudy}
-            onChange={e => onChange(e)}
+            onChange={onChange}
           />
         </div>
         <div className="form-group">
           <h4>From Date</h4>
-          <input
-            type="date"
-            name="from"
-            value={from}
-            onChange={e => onChange(e)}
-          />
+          <input type="date" name="from" value={from} onChange={onChange} />
         </div>
         <div className="form-group">
           <p>
             <input
               type="checkbox"
               name="current"
+              checked={current}
               value={current}
-              onChange={e => onChange(e)}
+              onChange={() => {
+                setFormData({ ...formData, current: !current });
+              }}
             />{' '}
             Current School or Bootcamp
           </p>
         </div>
         <div className="form-group">
           <h4>To Date</h4>
-          <input type="date" name="to" />
+          <input
+            type="date"
+            name="to"
+            value={to}
+            onChange={onChange}
+            disabled={current}
+          />
         </div>
         <div className="form-group">
           <textarea

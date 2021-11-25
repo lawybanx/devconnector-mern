@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 // Bring in Models
 const User = require('../models/User');
 const Profile = require('../models/Profile');
+const Post = require('../models/Post');
 
 //  @route  GET api/profile
 //  @desc   Get All Profiles
@@ -145,6 +146,9 @@ exports.getProfileById = async (req, res) => {
 
 exports.deleteProfile = async (req, res) => {
   try {
+    // Remove user posts
+    await Post.deleteMany({ user: req.user.id });
+
     // Remove profile
     await Profile.findOneAndRemove({ user: req.user.id });
 
@@ -225,15 +229,8 @@ exports.addEducation = async (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const {
-    school,
-    degree,
-    fieldofstudy,
-    from,
-    to,
-    current,
-    description,
-  } = req.body;
+  const { school, degree, fieldofstudy, from, to, current, description } =
+    req.body;
 
   const newEdu = {
     school,
