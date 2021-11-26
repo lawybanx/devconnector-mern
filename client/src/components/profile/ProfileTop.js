@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const ProfileTop = () => {
   return (
     <div className="profile-top bg-primary p-2">

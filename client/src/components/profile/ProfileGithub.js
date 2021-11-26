@@ -1,4 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Link } from 'react-router-dom';
+
 const ProfileGithub = () => {
+  const dispatch = useDispatch();
+
+  const { repos } = useSelector(state => state.profile);
+
   return (
     <div className="profile-github">
       <h2 className="text-primary my-1">
