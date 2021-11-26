@@ -1,11 +1,8 @@
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const ProfileItems = () => {
-  const { profiles } = useSelector(state => state.profile);
-
-  const items = profiles.map(profile => (
-    <div key={profile._id} className="profile bg-light">
+const ProfileItem = ({ profile }) => {
+  const items = (
+    <div className="profile bg-light">
       <img className="round-img" src={profile.user.avatar} alt="" />
       <div>
         <h2>{profile.user.name}</h2>
@@ -23,9 +20,9 @@ const ProfileItems = () => {
         ))}
       </ul>
     </div>
-  ));
+  );
 
   return items;
 };
 
-export default ProfileItems;
+export default ProfileItem;

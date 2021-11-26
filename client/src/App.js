@@ -15,14 +15,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/authActions';
-import { getProfiles } from './actions/profileActions';
 
 import './App.css';
 
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser()); //Why is this here? to load up the user on startup
-    store.dispatch(getProfiles());
   }, []);
 
   return (
