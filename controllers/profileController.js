@@ -14,11 +14,7 @@ exports.getAllProfiles = async (req, res, next) => {
   try {
     const profiles = await Profile.find().populate('user', ['name', 'avatar']);
 
-    res.status(200).json({
-      success: true,
-      count: profiles.length,
-      data: profiles,
-    });
+    res.status(200).json(profiles);
   } catch (err) {
     res.status(500).json({
       success: false,
