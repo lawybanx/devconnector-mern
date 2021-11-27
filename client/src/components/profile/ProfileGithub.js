@@ -1,11 +1,14 @@
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getRepos } from '../../actions/profileActions';
 
-const ProfileGithub = () => {
+const ProfileGithub = ({ username }) => {
   const dispatch = useDispatch();
 
-  const { repos } = useSelector(state => state.profile);
+  useEffect(() => {
+    dispatch(getRepos(username));
+  }, []);
 
   return (
     <div className="profile-github">

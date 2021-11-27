@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
+const normalize = require('normalize-url');
 
 // Bring in Model
 const User = require('../models/User');
@@ -42,14 +43,16 @@ exports.registerUser = async (req, res) => {
   try {
     // Check for existing user
     const userExists = await User.findOne({ email });
-    if (userExists)
-      return res.status(400).json({ msg: 'User already exists' });
+    if (userExists) return res.status(400).json({ msg: 'User already exists' });
 
-    const avatar = gravatar.url(email, {
-      s: '200',
-      r: 'pg',
-      d: 'mm',
-    });
+    const avatar = normalize(
+      gravatar.url(email, {
+        s: '200',
+        r: 'pg',
+        d: 'mm',
+      }),
+      { forceHttps: true }
+    );
 
     // Create Salt & Hash password
     const salt = await bcrypt.genSalt(10);
