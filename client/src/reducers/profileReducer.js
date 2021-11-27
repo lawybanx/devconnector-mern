@@ -31,7 +31,7 @@ const profileReducer = (state = initialState, { type, payload }) => {
       return { ...state, profile: null, repos: [], loading: false };
 
     case PROFILE_ERROR:
-      return { ...state, error: payload, loading: false };
+      return { ...state, error: payload, loading: false, profile: null };
 
     default:
       return state;
