@@ -22,9 +22,9 @@ const PostItem = ({
         <button type="button" className="btn btn-light">
           <i className="fas fa-thumbs-down"></i>
         </button>
-        <a href="post.html" className="btn btn-primary">
+        <Link to={`/post/${_id}`} className="btn btn-primary">
           Discussion <span className="comment-count">2</span>
-        </a>
+        </Link>
         <button type="button" className="btn btn-danger">
           <i className="fas fa-times"></i>
         </button>
