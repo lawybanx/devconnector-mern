@@ -57,3 +57,14 @@ export const addPost = formdata => async (dispatch, getState) => {
     dispatch(setAlert('Post Added', 'success'));
   } catch (err) {}
 };
+
+// Add likes
+
+// Delete Post
+export const deletePost = id => async (dispatch, getState) => {
+  try {
+    const res = await axios.delete(`/api/posts/${id}`, tokenConfig(getState));
+
+    dispatch({ type: DELETE_POST, payload: res.data });
+  } catch (err) {}
+};

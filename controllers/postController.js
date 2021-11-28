@@ -73,7 +73,7 @@ exports.addPost = async (req, res) => {
   }
 };
 
-//  @route  DELETe api/post
+//  @route  DELETE api/posts/:id
 //  @desc   Delete Post
 //  @access Private
 
@@ -100,7 +100,7 @@ exports.deletePost = async (req, res) => {
   }
 };
 
-//  @route  PUT api/post/:id
+//  @route  PUT api/posts/like/:id
 //  @desc   Like a post
 //  @access Private
 
@@ -125,7 +125,7 @@ exports.likePost = async (req, res) => {
   }
 };
 
-//  @route  PUT api/post/:id
+//  @route  PUT api/posts/unlike/:id
 //  @desc   Unlike a post
 //  @access Private
 
