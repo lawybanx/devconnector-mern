@@ -10,8 +10,8 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  post: null,
   posts: [],
+  post: null,
   loading: true,
   error: {},
 };
@@ -20,6 +20,15 @@ const postReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_POSTS:
       return { ...state, posts: payload, post: null, loading: false };
+
+    case UPDATE_LIKES:
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id === payload.id ? { ...post, likes: payload.likes } : post
+        ),
+        loading: false,
+      };
 
     case GET_POST:
       return { ...state, post: payload, loading: false };

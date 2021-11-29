@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import formatDate from '../../utils/formatDate';
-import { deletePost } from '../../actions/postActions';
+import { addLike, removeLike, deletePost } from '../../actions/postActions';
 
 const PostItem = ({
   post: { date, _id, user, text, name, avatar, likes, comments },
@@ -21,11 +21,19 @@ const PostItem = ({
       <div>
         <p className="my-1">{text}</p>
         <p className="post-date">Posted on {formatDate(date)}</p>
-        <button type="button" className="btn btn-light">
+        <button
+          onClick={e => dispatch(addLike(_id))}
+          type="button"
+          className="btn btn-light"
+        >
           <i className="fas fa-thumbs-up"></i>{' '}
           {likes.length > 0 && <span>{likes.length}</span>}
         </button>
-        <button type="button" className="btn btn-light">
+        <button
+          type="button"
+          onClick={e => dispatch(removeLike(_id))}
+          className="btn btn-light"
+        >
           <i className="fas fa-thumbs-down"></i>
         </button>
         <Link to={`/post/${_id}`} className="btn btn-primary">
@@ -36,8 +44,8 @@ const PostItem = ({
         </Link>
         {!auth.isLoading && auth.user._id === user && (
           <button
+            // onClick={() => dispatch(deletePost(_id))}
             type="button"
-            onClick={() => dispatch(deletePost(_id))}
             className="btn btn-danger"
           >
             <i className="fas fa-times"></i>
