@@ -109,9 +109,9 @@ exports.likePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     // Check User
-    const checkLike =
-      post.likes.filter(like => like.user.toString() === req.user.id).length >
-      0;
+    const checkLike = post.likes.some(
+      like => like.user.toString() === req.user.id
+    );
     if (checkLike) {
       return res.status(400).json({ msg: 'Post already liked' });
     }
@@ -119,7 +119,7 @@ exports.likePost = async (req, res) => {
     post.likes.unshift({ user: req.user.id });
 
     await post.save();
-    res.status(200).json(post.likes);
+    res.status(200).json({ likes: post.likes });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

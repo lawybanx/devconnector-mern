@@ -69,10 +69,9 @@ export const addPost = formdata => async (dispatch, getState) => {
 // Add like
 export const addLike = id => async (dispatch, getState) => {
   try {
-    const res = await axios.put(`/api/posts/like/${id}`, tokenConfig(getState));
+    const res = await axios.get(`/api/posts/like/${id}`, tokenConfig(getState));
 
     dispatch({ type: UPDATE_LIKES, payload: { id, likes: res.data } });
-    console.log(res.data);
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -87,12 +86,14 @@ export const addLike = id => async (dispatch, getState) => {
 // Remove like
 export const removeLike = id => async (dispatch, getState) => {
   try {
-    const res = await axios.put(
+    const res = await axios.get(
       `/api/posts/unlike/${id}`,
       tokenConfig(getState)
     );
 
     dispatch({ type: UPDATE_LIKES, payload: { id, likes: res.data } });
+    // dispatch({ type: UPDATE_LIKES, payload });
+
   } catch (err) {
     dispatch({
       type: POST_ERROR,

@@ -23,10 +23,10 @@ router
 router.route('/:id').get(auth, getPostById).delete(auth, deletePost);
 
 //Like Post
-router.put('/like/:id', auth, likePost);
+router.get('/like/:id', auth, likePost);
 
 // Unlike Post
-router.put('/unlike/:id', auth, unlikePost);
+router.get('/unlike/:id', auth, unlikePost);
 
 // Comment Post
 router.post(
