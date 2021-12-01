@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getPost } from '../../actions/postActions';
 import Spinner from '../layouts/Spinner';
+import PostItem from '../posts/PostItem';
+import CommentItem from './CommentItem';
+import CommentForm from './CommentForm';
 
 const Post = () => {
   const dispatch = useDispatch();
@@ -12,44 +15,27 @@ const Post = () => {
     dispatch(getPost(id));
   }, []);
 
-  const { post } = useSelector(state => state.post);
+  const { post, loading } = useSelector(state => state.post);
 
   return (
     <section className="container">
-      <Link to="/posts" className="btn">
-        Back To Posts
-      </Link>
-      {post === null ? (
+      {loading || post === null ? (
         <Spinner />
       ) : (
-        <div className="post bg-white p-1 my-1">
-          <div>
-            <Link to={`/profile/${post.user}`}>
-              <img className="round-img" src={post.avatar} alt="" />
-              <h4>{post.name}</h4>
-            </Link>
+        <>
+          <Link to="/posts" className="btn">
+            Back To Posts
+          </Link>
+          <PostItem post={post} showActions={false} />
+          <CommentForm postId={post._id} />
+          
+          <div className="comments">
+            {post.comments.map(comment => (
+              <CommentItem key={comment._id} comment={comment} postId={post._id} />
+            ))}
           </div>
-          <div>
-            <p className="my-1">{post.text}</p>
-          </div>
-        </div>
+        </>
       )}
-
-      <div className="post-form">
-        <div className="bg-primary p">
-          <h3>Leave A Comment</h3>
-        </div>
-        <form className="form my-1">
-          <textarea
-            name="text"
-            cols="30"
-            rows="5"
-            placeholder="Comment on this post"
-            required
-          ></textarea>
-          <input type="submit" className="btn btn-dark my-1" value="Submit" />
-        </form>
-      </div>
     </section>
   );
 };
