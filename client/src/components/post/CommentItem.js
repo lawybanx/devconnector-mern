@@ -9,7 +9,7 @@ const CommentItem = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { auth } = useSelector(state => state.auth);
+  const auth = useSelector(state => state.auth);
 
   return (
     <div className="post bg-white p-1 my-1">
