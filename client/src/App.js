@@ -13,6 +13,7 @@ import Posts from './components/posts/Posts';
 import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
 import PrivateRoute from './components/routing/PrivateRoute';
+import NotFound from './components/layouts/NotFound';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -59,6 +60,7 @@ const App = () => {
           />
           <Route path="posts" element={<PrivateRoute component={Posts} />} />
           <Route path="post/:id" element={<PrivateRoute component={Post} />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
     </Provider>

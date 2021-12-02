@@ -22,16 +22,16 @@ const CommentItem = ({
       <div>
         <p className="my-1">{text}</p>
         <p className="post-date">Posted on {formatDate(date)}</p>
+        {!auth.isLoading && auth.user._id === user && (
+          <button
+            onClick={() => dispatch(deleteComment(postId, _id))}
+            type="button"
+            className="btn btn-danger"
+          >
+            <i className="fas fa-times"></i>
+          </button>
+        )}
       </div>
-      {!auth.isLoading && auth.user._id === user && (
-        <button
-          onClick={() => dispatch(deleteComment(postId, _id))}
-          type="button"
-          className="btn btn-danger"
-        >
-          <i className="fas fa-times"></i>
-        </button>
-      )}
     </div>
   );
 };
