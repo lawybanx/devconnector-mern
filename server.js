@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -12,6 +13,13 @@ connectDB();
 
 // Express Init
 const app = express();
+
+// CORS Middlware
+const corsOptions = {
+    origin: "http://localhost:3000" // frontend URI (ReactJS)
+}
+app.use(express.json());
+app.use(cors(corsOptions));
 
 // Body-parser Middleware
 app.use(express.json());
