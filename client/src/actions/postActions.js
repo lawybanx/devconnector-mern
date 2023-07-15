@@ -13,10 +13,14 @@ import {
   REMOVE_COMMENT,
 } from './actionTypes';
 
+const api = axios.create({
+  baseURL: 'https://devconnector-backend-ggna.onrender.com/api',
+});
+
 // Get all Posts
 export const getPosts = () => async (dispatch, getState) => {
   try {
-    const res = await axios.get('/api/posts', tokenConfig(getState));
+    const res = await api.get('/posts', tokenConfig(getState));
 
     dispatch({ type: GET_POSTS, payload: res.data });
   } catch (err) {
@@ -33,7 +37,7 @@ export const getPosts = () => async (dispatch, getState) => {
 // Get Post By ID
 export const getPost = id => async (dispatch, getState) => {
   try {
-    const res = await axios.get(`/api/posts/${id}`, tokenConfig(getState));
+    const res = await api.get(`/posts/${id}`, tokenConfig(getState));
 
     dispatch({ type: GET_POST, payload: res.data });
   } catch (err) {
@@ -50,7 +54,7 @@ export const getPost = id => async (dispatch, getState) => {
 // Add Post
 export const addPost = formdata => async (dispatch, getState) => {
   try {
-    const res = await axios.post('/api/posts', formdata, tokenConfig(getState));
+    const res = await api.post('/posts', formdata, tokenConfig(getState));
 
     dispatch({ type: ADD_POST, payload: res.data });
 
@@ -69,7 +73,7 @@ export const addPost = formdata => async (dispatch, getState) => {
 // Add like
 export const addLike = id => async (dispatch, getState) => {
   try {
-    const res = await axios.get(`/api/posts/like/${id}`, tokenConfig(getState));
+    const res = await api.get(`/posts/like/${id}`, tokenConfig(getState));
 
     dispatch({ type: UPDATE_LIKES, payload: { id, likes: res.data } });
   } catch (err) {
@@ -86,10 +90,7 @@ export const addLike = id => async (dispatch, getState) => {
 // Remove like
 export const removeLike = id => async (dispatch, getState) => {
   try {
-    const res = await axios.get(
-      `/api/posts/unlike/${id}`,
-      tokenConfig(getState)
-    );
+    const res = await api.get(`/posts/unlike/${id}`, tokenConfig(getState));
 
     dispatch({ type: UPDATE_LIKES, payload: { id, likes: res.data } });
     // dispatch({ type: UPDATE_LIKES, payload });
@@ -107,7 +108,7 @@ export const removeLike = id => async (dispatch, getState) => {
 // Delete Post
 export const deletePost = id => async (dispatch, getState) => {
   try {
-    await axios.delete(`/api/posts/${id}`, tokenConfig(getState));
+    await api.delete(`/posts/${id}`, tokenConfig(getState));
 
     dispatch({ type: DELETE_POST, payload: id });
 
@@ -126,8 +127,8 @@ export const deletePost = id => async (dispatch, getState) => {
 // Add Comment
 export const addComment = (postId, formdata) => async (dispatch, getState) => {
   try {
-    const res = await axios.post(
-      `/api/posts/comment/${postId}`,
+    const res = await api.post(
+      `/posts/comment/${postId}`,
       formdata,
       tokenConfig(getState)
     );
@@ -150,8 +151,8 @@ export const addComment = (postId, formdata) => async (dispatch, getState) => {
 export const deleteComment =
   (postId, commentId) => async (dispatch, getState) => {
     try {
-      await axios.delete(
-        `/api/posts/comment/${postId}/${commentId}`,
+      await api.delete(
+        `/posts/comment/${postId}/${commentId}`,
         tokenConfig(getState)
       );
 

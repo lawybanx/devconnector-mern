@@ -12,10 +12,14 @@ import {
   ACCOUNT_DELETED,
 } from './actionTypes';
 
+const api = axios.create({
+  baseURL: 'https://devconnector-backend-ggna.onrender.com/api',
+});
+
 // Get current user profile
 export const getCurrentProfile = () => async (dispatch, getState) => {
   try {
-    const res = await axios.get('/api/profile/me', tokenConfig(getState));
+    const res = await api.get('/profile/me', tokenConfig(getState));
 
     dispatch({ type: GET_PROFILE, payload: res.data });
   } catch (err) {
@@ -33,7 +37,7 @@ export const getCurrentProfile = () => async (dispatch, getState) => {
 export const getProfiles = () => async dispatch => {
   dispatch({ type: CLEAR_PROFILE });
   try {
-    const res = await axios.get('/api/profile');
+    const res = await api.get('/profile');
 
     dispatch({
       type: GET_PROFILES,
@@ -53,7 +57,7 @@ export const getProfiles = () => async dispatch => {
 // Get profile by ID
 export const getProfileById = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/profile/user/${userId}`);
+    const res = await api.get(`/profile/user/${userId}`);
 
     dispatch({
       type: GET_PROFILE,
@@ -73,7 +77,7 @@ export const getProfileById = userId => async dispatch => {
 // Get Github Repos
 export const getRepos = username => async dispatch => {
   try {
-    const res = await axios.get(`/api/profile/github/${username}`);
+    const res = await api.get(`/profile/github/${username}`);
 
     dispatch({
       type: GET_REPOS,
@@ -95,11 +99,7 @@ export const createProfile =
   (formData, navigate, edit = false) =>
   async (dispatch, getState) => {
     try {
-      const res = await axios.post(
-        '/api/profile',
-        formData,
-        tokenConfig(getState)
-      );
+      const res = await api.post('/profile', formData, tokenConfig(getState));
 
       dispatch({
         type: GET_PROFILE,
@@ -114,7 +114,7 @@ export const createProfile =
         navigate('/dashboard');
       }
     } catch (err) {
-      const errors = err.response.data.errors;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
@@ -135,8 +135,8 @@ export const createProfile =
 export const addExperience =
   (formData, navigate) => async (dispatch, getState) => {
     try {
-      const res = await axios.put(
-        '/api/profile/experience',
+      const res = await api.put(
+        '/profile/experience',
         formData,
         tokenConfig(getState)
       );
@@ -150,7 +150,7 @@ export const addExperience =
 
       navigate('/dashboard');
     } catch (err) {
-      const errors = err.response.data.errors;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
@@ -171,8 +171,8 @@ export const addExperience =
 export const addEducation =
   (formData, navigate) => async (dispatch, getState) => {
     try {
-      const res = await axios.put(
-        '/api/profile/education',
+      const res = await api.put(
+        '/profile/education',
         formData,
         tokenConfig(getState)
       );
@@ -186,7 +186,7 @@ export const addEducation =
 
       navigate('/dashboard');
     } catch (err) {
-      const errors = err.response.data.errors;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
@@ -206,8 +206,8 @@ export const addEducation =
 // Delete Experience
 export const deleteExperience = id => async (dispatch, getState) => {
   try {
-    const res = await axios.delete(
-      `/api/profile/experience/${id}`,
+    const res = await api.delete(
+      `/profile/experience/${id}`,
       tokenConfig(getState)
     );
 
@@ -231,8 +231,8 @@ export const deleteExperience = id => async (dispatch, getState) => {
 // Delete Education
 export const deleteEducation = id => async (dispatch, getState) => {
   try {
-    const res = await axios.delete(
-      `/api/profile/education/${id}`,
+    const res = await api.delete(
+      `/profile/education/${id}`,
       tokenConfig(getState)
     );
 
@@ -257,7 +257,7 @@ export const deleteEducation = id => async (dispatch, getState) => {
 export const deleteProfile = () => async (dispatch, getState) => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
     try {
-      await axios.delete('/api/profile', tokenConfig(getState));
+      await api.delete('/profile', tokenConfig(getState));
 
       dispatch({ type: ACCOUNT_DELETED });
       dispatch({ type: CLEAR_PROFILE });

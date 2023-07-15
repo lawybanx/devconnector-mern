@@ -12,10 +12,14 @@ import {
 } from './actionTypes';
 import { setAlert } from './alertActions';
 
+const api = axios.create({
+  baseURL: 'https://devconnector-backend-ggna.onrender.com/api',
+});
+
 // Check token and load User
 export const loadUser = () => async (dispatch, getState) => {
   try {
-    const res = await axios.get('/api/auth/user', tokenConfig(getState));
+    const res = await api.get('/auth/user', tokenConfig(getState));
 
     dispatch({
       type: USER_LOADED,
@@ -41,7 +45,7 @@ export const registerUser =
       // Request body
       const body = JSON.stringify({ name, email, password });
 
-      const res = await axios.post('/api/auth/register', body, config);
+      const res = await api.post('/auth/register', body, config);
 
       dispatch({
         type: REGISTER_SUCCESS,
@@ -49,7 +53,7 @@ export const registerUser =
       });
       dispatch(loadUser());
     } catch (err) {
-      const errors = err.response.data.errors;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
@@ -76,7 +80,7 @@ export const loginUser =
       // Request body
       const body = JSON.stringify({ email, password });
 
-      const res = await axios.post('/api/auth/login', body, config);
+      const res = await api.post('/auth/login', body, config);
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -84,7 +88,7 @@ export const loginUser =
       });
       dispatch(loadUser());
     } catch (err) {
-      const errors = err.response.data.errors;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
@@ -105,7 +109,7 @@ export const logout = () => dispatch => {
 // Setup config/headers and token
 export const tokenConfig = getState => {
   // Get token from localstorage
-  const token = getState().auth.token;
+  const { token } = getState().auth;
 
   // Headers
   const config = {
