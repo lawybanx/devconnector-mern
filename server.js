@@ -16,8 +16,8 @@ const app = express();
 
 // CORS Middlware
 const corsOptions = {
-    origin: "http://localhost:3000" // frontend URI (ReactJS)
-}
+  origin: 'https://devconnector-fb0e.onrender.com', // frontend URI (ReactJS)
+};
 app.use(express.json());
 app.use(cors(corsOptions));
 
